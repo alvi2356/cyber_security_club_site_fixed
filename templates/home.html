@@ -1,0 +1,932 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="home-container">
+    <div id="particles-js"></div>
+    <div class="content-wrapper">
+        <div class="left-column">
+            <p class="welcome-text">Welcome to</p>
+            <h1 class="main-title">Cyber Security Club</h1>
+            <h2 class="sub-title">CSE-UAP</h2>
+            <div class="mission-statement">
+                <p class="typing-text"></p>
+            </div>
+            <div class="button-group">
+                <a href="{% url 'event_list' %}" class="cta-button register-button">Explore Events <i class="fas fa-arrow-right"></i></a>
+                <a href="{% url 'team_list' %}" class="cta-button learn-more-button">Meet The Team</a>
+            </div>
+        </div>
+        <div class="right-column">
+             <img src="{% static 'assets/img2.jpg' %}" alt="Cyber Security Image" class="hero-image">
+        </div>
+    </div>
+</div>
+
+<!-- What We Do Section -->
+<section class="what-we-do-section">
+    <div class="container">
+        <h2>What We Do</h2>
+        <p class="section-subtitle">Empowering students through cybersecurity education and hands-on experience</p>
+        <div class="features-grid">
+            <div class="feature-card ethical-hacking">
+                <div class="icon"><i class="fas fa-code"></i></div> {# Icon for Ethical Hacking #}
+                <h3>Ethical Hacking</h3>
+                <p>Learn penetration testing, vulnerability assessment, and ethical hacking techniques.</p>
+            </div>
+            <div class="feature-card digital-defense">
+                <div class="icon"><i class="fas fa-shield-alt"></i></div> {# Icon for Digital Defense #}
+                <h3>Digital Defense</h3>
+                <p>Master network security, incident response, and digital forensics.</p>
+            </div>
+            <div class="feature-card ctf-competitions">
+                <div class="icon"><i class="fas fa-wifi"></i></div> {# Icon for CTF Competitions #}
+                <h3>CTF Competitions</h3>
+                <p>Participate in Capture The Flag competitions and cybersecurity challenges.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Our Club Section -->
+
+
+<!-- Testimonial Section -->
+<section class="testimonial-section">
+    <div class="container">
+        <h2 class="section-title">What Others Say About Us</h2> {# You can change this title #}
+        
+        
+
+        <!-- Testimonial for Vice Chancellor -->
+        <div class="testimonial-item">
+            <div class="testimonial-image">
+                {# Placeholder for image #}
+                <img src="{% static 'assets/vc.jpg' %}" alt="Vice Chancellor Image">
+            </div>
+            <div class="testimonial-content">
+                <div class="quote-icon"><i class="fas fa-quote-right"></i></div> {# Quote icon #}
+                <p class="testimonial-text">Your commitment to cybersecurity excellence has truly made an impact.
+                    This achievement reflects your hard work, sharp skills, and relentless drive.
+                    A proud moment for you—and a shining moment for our Cyber Security Club.
+                    Keep breaking limits. The future is yours!</p>
+                <p class="testimonial-author">Prof. Dr. Qumrul Ahsan              </p>
+                <p class="testimonial-title">Vice Chancellor</p>
+                <p class="testimonial-affiliation">University of Asia Pacific</p>
+            </div>
+        </div>
+
+        <!-- Testimonial for Department Head -->
+        <div class="testimonial-item">
+            <div class="testimonial-image">
+                {# Placeholder for image #}
+                <img src="{% static 'assets/head.jpg' %}" alt="Department Head Image">
+            </div>
+            <div class="testimonial-content">
+                <div class="quote-icon"><i class="fas fa-quote-right"></i></div> {# Quote icon #}
+                <p class="testimonial-text">Way to go, Cyber Warrior!</p>
+                <p class="testimonial-author">
+                    Dr. Shah Murtaza Rashid Al Masud</p>
+                <p class="testimonial-title">Department Head</p>
+                <p class="testimonial-affiliation">Department of Computer Science and Engineering</p>
+                <p class="testimonial-affiliation">University of Asia Pacific</p>
+            </div>
+        </div>
+
+        <!-- Testimonial for Convenor -->
+        <div class="testimonial-item">
+            <div class="testimonial-image">
+                {# Placeholder for image #}
+                <img src="{% static 'assets/conv.jpg' %}" alt="Convenor Image">
+            </div>
+            <div class="testimonial-content">
+                <div class="quote-icon"><i class="fas fa-quote-right"></i></div> {# Quote icon #}
+                <p class="testimonial-text">Your passion for the work of cyber security has not gone unnoticed…a proud moment for you and for our club. Way to go!</p>
+                <p class="testimonial-author">
+                    Dr. Muhammad Towfiqur Rahman</p>
+                <p class="testimonial-title">Convenor</p>
+               Cyber Security Club CSE-UAP
+                <p class="testimonial-affiliation">University of Asia Pacific</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<!-- Add Particles.js -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<style>
+/* Existing styles from base.html or previous edits may be here */
+
+/* New and modified styles for homepage layout */
+.home-container {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #1D2671, #c02cc0, #1D2671, #810077); /* Example gradient, will update based on actual body gradient */
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 80px 20px; /* Add padding to account for fixed header */
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.left-column {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+    margin-right: 40px;
+    text-align: left;
+}
+
+.welcome-text {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    margin-bottom: 0.5rem;
+}
+
+.main-title {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Optional: Add a subtle white glow */
+}
+
+.sub-title {
+     font-size: 2.5rem;
+     color: #fff;
+     margin-bottom: 1.5rem;
+}
+
+.mission-statement {
+    font-size: 1.2rem; /* Adjust font size as needed */
+    max-width: 800px;
+    margin: 0 auto 3rem; /* Adjusted margin */
+    color: #e0e0e0;
+    min-height: 3em; /* Ensure enough space for typing */
+    line-height: 1.6;
+}
+
+.typing-text {
+    display: inline-block;
+    border-right: 2px solid #00ff87; /* Adjust cursor color */
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 3.5s steps(70, end), blink-caret 0.75s step-end infinite;
+    margin: 0 auto; /* Center typing text if parent is centered */
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #00ff87; /* Match cursor color */} /* Adjusted color */
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-button {
+    background: linear-gradient(45deg, #a060f0, #60a0f0); /* Example gradient */
+    color: #fff;
+    border: none;
+}
+
+.learn-more-button {
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(160, 96, 240, 0.3); /* Example shadow */
+}
+
+.right-column {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-left: 40px;
+}
+
+.hero-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+/* What We Do Section styles */
+.what-we-do-section {
+    padding: 80px 20px;
+    text-align: center;
+    background: linear-gradient(-45deg, #0a192f, #112240, #1a365d); /* Dark blue gradient background */
+    background-size: 400% 400%; /* Set background size for animation */
+    animation: gradient 15s ease infinite; /* Apply animation */
+    color: #e0e0e0;
+    position: relative;
+    overflow: hidden;
+}
+
+.what-we-do-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Remove or adjust texture if not desired */
+    /* background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.05), rgba(255,255,255,.05) 2px, transparent 2px, transparent 4px); */
+    /* background-size: 20px 20px; */
+    /* opacity: 0.1; */
+    /* z-index: 1; */
+    /* animation: texture-move 30s linear infinite; */
+    pointer-events: none;
+}
+
+/* Keep existing @keyframes gradient and texture-move if used elsewhere */
+/* @keyframes gradient { ... } */
+/* @keyframes texture-move { ... } */
+
+.what-we-do-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.what-we-do-section .section-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    color: #b0b0b0;
+}
+
+.features-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle dark transparent background */
+    border: 1px solid transparent; /* Use transparent border with pseudo-element for gradient */
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden; /* Needed for pseudo-element border/glow */
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 12px; /* Slightly larger radius for glow */
+    background: linear-gradient(45deg, #00c6ff, #a060f0); /* Default gradient border */
+    background-size: 200% 200%; /* For potential animation */
+    z-index: -1; /* Behind the main content */
+    opacity: 1; /* Always visible border */
+    /* animation: glowing-border 3s linear infinite; */ /* Optional glowing animation */
+}
+
+/* Specific card border gradients (using pseudo-elements) */
+.feature-card.ethical-hacking::before {
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+}
+
+.feature-card.digital-defense::before {
+    background: linear-gradient(45deg, #a060f0, #60a0f0);
+}
+
+.feature-card.ctf-competitions::before {
+     background: linear-gradient(45deg, #C33764, #fe5126);
+}
+
+/* Optional glowing border animation keyframes if enabled */
+/* @keyframes glowing-border {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+} */
+
+.feature-card:hover {
+    transform: translateY(-10px); /* More pronounced lift on hover */
+    box-shadow: 0 15px 30px rgba(0, 198, 255, 0.3); /* Example glowing shadow on hover */
+}
+
+/* Adjust hover effect on pseudo-element if glowing animation is used */
+/* .feature-card:hover::before {
+    opacity: 1; 
+} */
+
+.feature-card .icon {
+    font-size: 3.5rem; /* Larger icons */
+    margin-bottom: 15px;
+    /* Color will be set by specific card styles below */
+}
+
+.feature-card.ethical-hacking .icon {
+    color: #00c6ff; /* Blue icon */
+}
+
+.feature-card.digital-defense .icon {
+    color: #a060f0; /* Purple icon */
+}
+
+.feature-card.ctf-competitions .icon {
+    color: #fe5126; /* Pink/Red icon */
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    color: #b0b0b0;
+    line-height: 1.5;
+}
+
+/* Responsive adjustments for cards */
+@media (max-width: 768px) {
+    .features-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-card {
+        max-width: 80%;
+    }
+}
+
+/* New styles for About Our Club section */
+.about-club-section {
+    padding: 100px 20px; /* Increased padding */
+    text-align: center;
+    background: linear-gradient(45deg, #0b0f1a, #1a2a3a); /* Darker, subtle gradient background */
+    background-size: 400% 400%;
+    animation: gradient 20s ease infinite; /* Animated gradient */
+    color: #e0e0e0;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-club-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: repeating-linear-gradient(45deg, rgba(98, 207, 244, 0.05), rgba(98, 207, 244, 0.05) 2px, transparent 2px, transparent 4px); /* Subtle blue diagonal line texture */
+    background-size: 25px 25px; /* Larger texture size */
+    opacity: 0.08; /* Slightly less opaque */
+    z-index: 1;
+    animation: texture-move 40s linear infinite; /* Slower texture animation */
+    pointer-events: none;
+}
+
+@keyframes texture-move {
+    0% { background-position: 0 0; }
+    100% { background-position: 50px 50px; } /* Larger move distance */
+}
+
+.about-club-section .section-title {
+    font-size: 3rem; /* Larger title */
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(98, 207, 244, 0.5); /* Glowing text shadow */
+}
+
+.about-club-section .section-subtitle {
+    font-size: 1.3rem; /* Larger subtitle */
+    margin-bottom: 60px; /* Increased margin */
+    color: #b0b0b0;
+}
+
+.about-content-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 60px; /* Increased gap */
+    flex-wrap: wrap;
+    max-width: 1300px; /* Increased max width */
+    margin: 0 auto;
+    position: relative; /* Needed for z-index */
+    z-index: 2; /* Ensure content is above texture */
+}
+
+.mission-activities-box {
+    flex: 1;
+    min-width: 300px;
+    max-width: 650px; /* Increased max width */
+    background-color: rgba(25, 42, 58, 0.7); /* More opaque dark background */
+    border: 1px solid transparent; /* Start with transparent border for animation */
+    border-image: linear-gradient(45deg, #00c6ff, #a060f0); /* Gradient border */
+    border-image-slice: 1;
+    border-radius: 10px;
+    padding: 40px; /* Increased padding */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Increased space */
+    position: relative;
+    overflow: hidden; /* Hide potential border overflow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mission-activities-box::before {
+     content: '';
+     position: absolute;
+     top: -2px;
+     left: -2px;
+     right: -2px;
+     bottom: -2px;
+     border-radius: 12px; /* Slightly larger radius for glow */
+     background: linear-gradient(45deg, #00c6ff, #a060f0, #00c6ff); /* Animated glowing border */
+     background-size: 200% 200%;
+     animation: glowing-border 3s linear infinite;
+     z-index: -1; /* Behind the main content */
+     opacity: 0; /* Initially hidden */
+     transition: opacity 0.3s ease;
+}
+
+.mission-activities-box:hover {
+    transform: translateY(-10px); /* More pronounced lift effect */
+    box-shadow: 0 15px 30px rgba(0, 198, 255, 0.3); /* Glowing shadow */
+}
+
+.mission-activities-box:hover::before {
+    opacity: 1; /* Show glow on hover */
+}
+
+@keyframes glowing-border {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.mission-section-about h3,
+.what-we-do-section-about h3 {
+    font-size: 2rem; /* Larger headings */
+    margin-bottom: 15px;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2); /* Subtle text shadow */
+}
+
+.mission-section-about p,
+.what-we-do-section-about ul li {
+     font-size: 1.1rem; /* Larger text */
+     color: #c0c0c0; /* Slightly lighter text */
+     line-height: 1.7;
+}
+
+.mission-section-about .icon i,
+.what-we-do-section-about .icon i {
+     font-size: 3rem; /* Larger icons */
+    color: #00c6ff; /* Icon color */
+    margin-bottom: 15px;
+}
+
+.activities-list {
+    list-style: none;
+    padding: 0;
+}
+
+.activities-list li {
+    margin-bottom: 12px; /* Increased space */
+}
+
+.activities-list li i {
+     color: #00ff87; /* Green checkmark color */
+    margin-right: 12px; /* Increased space */
+}
+
+.stats-grid-about {
+    flex: 1;
+    min-width: 300px;
+    max-width: 550px; /* Adjusted max width */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Adjusted grid */
+    gap: 30px; /* Increased gap */
+    align-items: center; /* Center align items */
+}
+
+.stat-card-about {
+    background-color: rgba(25, 42, 58, 0.7); /* More opaque dark background */
+    border: 1px solid transparent;
+    border-image: linear-gradient(45deg, #a060f0, #C33764); /* Gradient border */
+    border-image-slice: 1;
+    border-radius: 10px;
+    padding: 30px; /* Increased padding */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card-about::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #a060f0, #C33764, #a060f0); /* Animated glowing border */
+    background-size: 200% 200%;
+    animation: glowing-border 3s linear infinite reverse; /* Animated glow, reversed */
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-card-about:hover {
+    transform: translateY(-10px); /* More pronounced lift */
+     box-shadow: 0 15px 30px rgba(160, 96, 240, 0.3); /* Glowing shadow */
+}
+
+.stat-card-about:hover::before {
+     opacity: 1; /* Show glow on hover */
+}
+
+.stat-card-about .icon i {
+    font-size: 3.5rem; /* Larger icons */
+    color: #a060f0; /* Icon color */
+    margin-bottom: 15px;
+}
+
+.stat-card-about .number {
+    font-size: 3rem; /* Larger number */
+    font-weight: bold;
+    margin-bottom: 8px; /* Increased margin */
+    color: #fff;
+}
+
+.stat-card-about .label {
+    font-size: 1.1rem; /* Larger label */
+    color: #c0c0c0; /* Slightly lighter label */
+}
+
+/* Responsive adjustments for about section */
+@media (max-width: 992px) {
+    .about-content-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mission-activities-box,
+    .stats-grid-about {
+        max-width: 95%; /* Increased max width on smaller screens */
+    }
+
+    .mission-activities-box {
+        padding: 30px; /* Adjust padding */
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-grid-about {
+        grid-template-columns: 1fr; /* Stack stats cards on small screens */
+        gap: 15px; /* Adjust gap */
+    }
+
+    .stat-card-about {
+        padding: 25px; /* Adjust padding */
+    }
+
+    .about-club-section .section-title {
+        font-size: 2rem; /* Adjust title size */
+    }
+
+    .about-club-section .section-subtitle {
+        font-size: 1rem; /* Adjust subtitle size */
+         margin-bottom: 30px; /* Adjust margin */
+    }
+
+    .mission-activities-box {
+        gap: 25px; /* Adjust gap */
+    }
+
+    .mission-section-about h3,
+    .what-we-do-section-about h3 {
+        font-size: 1.5rem; /* Adjust heading size */
+    }
+
+    .mission-section-about .icon i,
+    .what-we-do-section-about .icon i {
+        font-size: 2rem; /* Adjust icon size */
+    }
+
+    .activities-list li {
+        margin-bottom: 6px; /* Adjust space */
+    }
+
+    .activities-list li i {
+        margin-right: 8px; /* Adjust space */
+    }
+
+    .stat-card-about .icon i {
+         font-size: 2.5rem; /* Adjust icon size */
+    }
+
+     .stat-card-about .number {
+        font-size: 2rem; /* Adjust number size */
+     }
+
+    .stat-card-about .label {
+        font-size: 0.9rem; /* Adjust label size */
+    }
+}
+
+/* Responsive adjustments for stats cards (re-adding for clarity, should be below .about-club-section media queries) */
+@media (max-width: 768px) {
+    .stats-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stat-card {
+        max-width: 80%;
+    }
+}
+
+/* Existing styles for Statistics section should remain below the new styles */
+
+/* New styles for Testimonial section */
+.testimonial-section {
+    padding: 80px 20px;
+    text-align: center;
+    background: #0a192f; /* Dark blue background */
+    color: #e0e0e0;
+    overflow: hidden; /* Ensure elements animating from outside are hidden */
+}
+
+.testimonial-section .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+.testimonial-item {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center align items vertically */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 40px; /* Space between image and content */
+    max-width: 900px; /* Limit testimonial width */
+    margin: 40px auto; /* Increased margin between testimonial items */
+    background-color: rgba(255, 255, 255, 0.08); /* Subtle transparent background */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 40px; /* Increased padding */
+    text-align: left; /* Align text within the box */
+    opacity: 0; /* Start with hidden opacity for animation */
+    transform: translateY(20px); /* Start slightly below final position */
+    animation: fadeInSlideUp 0.8s ease forwards; /* Apply animation */
+    position: relative; /* Needed for pseudo-element positioning */
+    overflow: hidden; /* Hide pseudo-element overflow */
+    border: 1px solid transparent; /* Make original border transparent */
+}
+
+/* Add different animation delays to stagger the appearance of testimonials */
+.testimonial-item:nth-child(2) { animation-delay: 0.2s; }
+.testimonial-item:nth-child(3) { animation-delay: 0.4s; }
+.testimonial-item:nth-child(4) { animation-delay: 0.6s; }
+.testimonial-item:nth-child(5) { animation-delay: 0.8s; } /* Adjust if more testimonials are added */
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.testimonial-item::before {
+    content: '';
+    position: absolute;
+    top: -2px; /* Adjust for border thickness */
+    left: -2px; /* Adjust for border thickness */
+    right: -2px; /* Adjust for border thickness */
+    bottom: -2px; /* Adjust for border thickness */
+    border-radius: 12px; /* Slightly larger radius for glow */
+    background: linear-gradient(45deg, #3d2e70, #5d0c64); /* Gradient color */
+    z-index: -1; /* Behind the main content */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease;
+}
+
+.testimonial-item:hover::before {
+    opacity: 1; /* Show gradient border on hover */
+}
+
+.testimonial-image img {
+    width: 150px; /* Adjust image size */
+    height: 150px; /* Adjust image size */
+    border-radius: 50%; /* Circular image */
+    object-fit: cover; /* Cover the area without distortion */
+    border: 3px solid #62cff4; /* Border around image */
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+.testimonial-content {
+    flex: 1;
+    min-width: 300px; /* Minimum width for content */
+    position: relative;
+}
+
+.quote-icon {
+    position: absolute;
+    top: -20px; /* Adjust position */
+    right: 0; /* Adjust position */
+    font-size: 4rem; /* Large icon */
+    color: rgba(98, 207, 244, 0.3); /* Semi-transparent icon color */
+    z-index: 1; /* Ensure icon is above text */
+}
+
+.testimonial-text {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    position: relative; /* Needed for z-index */
+    z-index: 2; /* Ensure text is above icon */
+}
+
+.testimonial-author {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #62cff4; /* Highlight color for author name */
+    margin-bottom: 5px;
+}
+
+.testimonial-title,
+.testimonial-affiliation {
+    font-size: 1rem;
+    color: #b0b0b0;
+    margin-bottom: 3px;
+}
+
+/* Responsive adjustments for testimonial section */
+@media (max-width: 768px) {
+    .testimonial-item {
+        flex-direction: column; /* Stack items on smaller screens */
+        text-align: center; /* Center align text */
+    }
+
+    .testimonial-image {
+        margin-bottom: 20px; /* Space below image */
+    }
+
+    .testimonial-content {
+        min-width: unset; /* Remove minimum width constraint */
+    }
+
+     .quote-icon {
+        top: 0; /* Adjust icon position */
+        right: 10px; /* Adjust icon position */
+        font-size: 3rem; /* Adjust icon size */
+     }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Particles.js configuration (keep existing config)
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: '#ffffff'
+            },
+            shape: {
+                type: 'circle'
+            },
+            opacity: {
+                value: 0.6,
+                random: true
+            },
+            size: {
+                value: 3,
+                random: true
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: '#ffffff',
+                opacity: 0.3,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 2,
+                direction: 'none',
+                random: true,
+                straight: false,
+                out_mode: 'out',
+                bounce: false
+            }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: 'grab'
+                },
+                onclick: {
+                    enable: true,
+                    mode: 'push'
+                },
+                resize: true
+            }
+        },
+        retina_detect: true
+    });
+
+    // Typing animation
+    const text = "Empowering minds to defend the digital world  through knowledge.";
+    const typingText = document.querySelector('.typing-text');
+    let i = 0;
+
+    function typeWriter() {
+        if (i < text.length) {
+            typingText.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 50);
+        }
+    }
+
+    // Start typing animation
+    typeWriter();
+});
+</script>
+{% endblock %}

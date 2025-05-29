@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .achievement-container {
+    max-width: 1200px;
+    margin: 120px auto 40px;
+    padding: 0 15px;
+  }
+  .achievement-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .achievement-header h2 {
+    font-size: 3.2rem;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px rgba(0, 149, 255, 0.3);
+  }
+  .achievement-header p {
+    font-size: 1.4rem;
+    color: #e0e0e0;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 80px;
+  }
+  .stat-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+  }
+  .stat-icon i {
+    font-size: 3rem;
+    color: #00c6ff;
+    margin-bottom: 15px;
+  }
+   .stat-card:nth-child(2) .stat-icon i { color: #a060f0; } /* Purple */
+   .stat-card:nth-child(3) .stat-icon i { color: #fe5126; } /* Orange */
+   .stat-card:nth-child(4) .stat-icon i { color: #28a745; } /* Green */
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+  .stat-description {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+  }
+
+  .achievement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .achievement-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: border-color 0.3s ease;
+  }
+   .achievement-item:hover { border-color: #00c6ff; }
+
+  .achievement-item h3 {
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  .achievement-meta {
+    font-size: 1rem;
+    color: #b0b0b0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .achievement-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+  }
+  .achievement-meta i {
+      color: #00c6ff;
+  }
+   .achievement-meta .tag i { color: #ffffff; }
+
+  .achievement-meta .tag {
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .achievement-meta .tag.place { background: #007bff; }
+  .achievement-meta .tag.type { background: #28a745; }
+  .achievement-meta .tag.category { background: #ffc107; color: #333; }
+  .achievement-meta .tag.award { background: #6f42c1; }
+  .achievement-meta .tag.research { background: #dc3545; }
+  .achievement-meta .tag.innovation { background: #17a2b8; }
+
+  .achievement-description {
+    font-size: 1.1rem;
+    color: #cccccc;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  .achievement-participants {
+    font-size: 1rem;
+    color: #b0b0b0;
+    margin-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+  }
+  .achievement-participants strong { color: #e0e0e0; margin-right: 10px; }
+  .achievement-participants span {
+      background: rgba(0,0,0,0.2);
+      border-radius: 15px;
+      padding: 3px 10px;
+      margin-right: 8px;
+      font-size: 0.9rem;
+      display: inline-block;
+      margin-bottom: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+    .stat-card {
+      padding: 20px;
+    }
+    .stat-icon i {
+      font-size: 2.5rem;
+    }
+    .stat-number {
+      font-size: 2rem;
+    }
+    .stat-description {
+      font-size: 1rem;
+    }
+    .achievement-item {
+        padding: 20px;
+    }
+    .achievement-item h3 {
+        font-size: 1.5rem;
+    }
+    .achievement-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+     .achievement-meta span {
+         margin-right: 0;
+     }
+  }
+</style>
+
+<div class="achievement-container">
+  <div class="achievement-header">
+    <h2>Our Achievements</h2>
+    <p>Celebrating our journey of excellence in cybersecurity education and competition.</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+      <div class="stat-number">15+</div>
+      <div class="stat-description">Awards Won</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-laptop-code"></i></div>
+      <div class="stat-number">25+</div>
+      <div class="stat-description">Competitions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-star"></i></div>
+      <div class="stat-number">8</div>
+      <div class="stat-description">Research Papers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+      <div class="stat-number">5</div>
+      <div class="stat-description">Years Active</div>
+    </div>
+  </div>
+
+  <div class="achievement-list">
+    {% for achievement in achievements %}
+      <div class="achievement-item">
+        <h3>{{ achievement.title }}</h3>
+        <div class="achievement-meta">
+          {% if achievement.place %}<span class="tag place">{{ achievement.place }}</span>{% endif %}
+          {% if achievement.type %}<span class="tag type">{{ achievement.type }}</span>{% endif %}
+          {% if achievement.category %}<span class="tag category">{{ achievement.category }}</span>{% endif %}
+          <span><i class="far fa-calendar-alt"></i> {{ achievement.date|date:"F Y" }}</span>
+        </div>
+        <p class="achievement-description">{{ achievement.description }}</p>
+        {% if achievement.participants.exists %}
+          <div class="achievement-participants">
+            <strong>Participants:</strong>
+            {% for participant in achievement.participants.all %}
+              <span>{{ participant.name }}</span>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% empty %}
+      <p style="text-align:center; color:#999;">No achievements found yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

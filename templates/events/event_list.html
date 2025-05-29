@@ -1,0 +1,352 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    @keyframes gradientAnimation {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .event-card {
+        background: linear-gradient(-45deg, #f3f4f6, #e5e7eb, #dbeafe, #eff6ff);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    /* Specific styles for the large upcoming card */
+    .large-upcoming-card {
+        height: 700px; /* Taller height for upcoming event */
+    }
+
+    .large-upcoming-card .event-image-container-large {
+        height: 400px; /* Taller image for upcoming event */
+    }
+
+    .large-upcoming-card .event-content-large {
+        padding: 35px; /* More padding for upcoming event */
+    }
+
+    .large-upcoming-card .event-title {
+        font-size: 2rem; /* Larger title for upcoming event */
+        margin-bottom: 20px;
+    }
+
+    .large-upcoming-card .event-description {
+        font-size: 1.1rem; /* Larger description text for upcoming event */
+        line-height: 1.7;
+        margin: 25px 0;
+    }
+
+    .large-upcoming-card .event-button {
+        padding: 15px 35px; /* Larger button for upcoming event */
+        font-size: 1.1rem;
+    }
+
+    .event-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        animation: gradientAnimation 8s ease infinite;
+    }
+
+    .event-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(145deg, rgba(0,123,255,0.1), rgba(0,198,255,0.1));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .event-card:hover::before {
+        opacity: 1;
+    }
+
+    .event-image-container, .event-image-container-large {
+        position: relative;
+        width: 100%;
+        height: 280px;
+        overflow: hidden;
+    }
+
+    .event-image-container img, .event-image-container-large img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .event-card:hover .event-image-container img,
+    .event-card:hover .event-image-container-large img {
+        transform: scale(1.1);
+    }
+
+    .event-content-large {
+        padding: 25px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(-45deg,#EE9CA7 ,#FFDDE1, #93A5CF ,#FCB69F);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+        position: relative;
+        z-index: 1;
+    }
+
+    .event-card:hover .event-content-large {
+        animation: gradientAnimation 8s ease infinite;
+    }
+
+    .event-title {
+        font-size: 1.5rem;
+        margin: 0 0 15px 0;
+        color: #1e293b;
+        transition: color 0.3s ease;
+        font-weight: 600;
+    }
+
+    .event-title a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .event-card:hover .event-title {
+        color: #007bff;
+    }
+
+    .event-info {
+        color: #475569;
+        margin: 5px 0;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+
+    .event-card:hover .event-info {
+        color: #490a58;
+    }
+
+    .event-description {
+        color: #475569;
+        margin: 15px 0;
+        line-height: 1.5;
+        flex-grow: 1;
+        transition: color 0.3s ease;
+    }
+
+    .event-card:hover .event-description {
+        color: #334155;
+    }
+
+    .event-button {
+        display: inline-block;
+        padding: 12px 25px;
+        background: linear-gradient(145deg, #007bff, #5700e4);
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: auto;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        font-weight: 500;
+    }
+
+    .event-button:hover {
+        background: linear-gradient(145deg, #0056b3, #004494);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+    }
+
+    .event-button::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .event-button:hover::after {
+        left: 100%;
+    }
+
+    .event-tags {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        gap: 5px;
+        z-index: 2;
+    }
+
+    .event-tag {
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        color: white;
+        background: #007bff;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .event-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .event-tag.seminar { 
+        background: linear-gradient(145deg, #28a745, #218838);
+    }
+    .event-tag.workshop { 
+        background: linear-gradient(145deg, #ffc107, #d39e00);
+        color: #000;
+    }
+    .event-tag.ctf { 
+        background: linear-gradient(145deg, #dc3545, #bd2130);
+    }
+    .event-tag.contest { 
+        background: linear-gradient(145deg, #6f42c1, #5a32a3);
+    }
+
+    .event-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    @media (max-width: 800px) {
+        .event-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .large-upcoming-card {
+            height: auto;
+            min-height: 600px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .event-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .large-upcoming-card {
+        margin-bottom: 40px;
+    }
+
+    .event-category-title {
+        font-size: 2.2rem;
+        color: #ffffff;
+        margin-bottom: 25px;
+        font-weight: 600;
+        text-shadow: 0 0 15px rgba(0, 149, 255, 0.2);
+    }
+
+    .section-title {
+        font-size: 3.2rem;
+        color: #ffffff;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-shadow: 0 0 20px rgba(0, 149, 255, 0.3);
+    }
+
+    .section-subtitle {
+        color: #ffffff;
+        margin-bottom: 35px;
+        font-size: 1.4rem;
+        opacity: 0.9;
+        text-shadow: 0 0 15px rgba(0, 149, 255, 0.2);
+    }
+</style>
+
+<section class="events-section">
+    <div class="container">
+        <h2 class="section-title">Events</h2>
+        <p class="section-subtitle">Browse our upcoming and past events.</p>
+
+        {% if upcoming_events %}
+        <div class="upcoming-events upcoming-single-card">
+            <h3 class="event-category-title">Upcoming Event</h3>
+            {% with event=upcoming_events.0 %}
+            <div class="event-card large-upcoming-card">
+                 <div class="event-image-container-large">
+                    <img src="{% if event.cover_image %}{{ event.cover_image.url }}{% else %}{% static 'assets/default_event.jpg' %}{% endif %}" alt="{{ event.title }} Image">
+                    <div class="event-tags">
+                        <span class="event-tag {{ event.event_type }}">{{ event.get_event_type_display }}</span>
+                    </div>
+                </div>
+                <div class="event-content-large">
+                    <h4 class="event-title"><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></h4>
+                    <p class="event-info"><i class="far fa-calendar-alt"></i> {{ event.date|date:"F d, Y" }}</p>
+                     {% if event.time %}
+                    <p class="event-info"><i class="far fa-clock"></i> {{ event.time|date:"h:i A" }}</p>
+                     {% endif %}
+                    <p class="event-info"><i class="fas fa-map-marker-alt"></i> {{ event.location }}</p>
+                    <p class="event-description">{{ event.description|truncatechars:250 }}</p>
+                    <a href="{% url 'event_detail' event.pk %}" class="event-button">Details / Register</a>
+                </div>
+            </div>
+            {% endwith %}
+        </div>
+        {% else %}
+            <p>No upcoming events scheduled at this time.</p>
+        {% endif %}
+
+        {% if past_events %}
+        <div class="past-events">
+            <h3 class="event-category-title">Past Events</h3>
+            <div class="event-grid">
+                {% for event in past_events %}
+                <div class="event-card">
+                    <div class="event-image-container">
+                        <img src="{% if event.cover_image %}{{ event.cover_image.url }}{% else %}{% static 'assets/default_event.jpg' %}{% endif %}" alt="{{ event.title }} Image">
+                        <div class="event-tags">
+                            <span class="event-tag {{ event.event_type }}">{{ event.get_event_type_display }}</span>
+                        </div>
+                    </div>
+                    <div class="event-content-large">
+                        <h4 class="event-title"><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></h4>
+                        <p class="event-info"><i class="far fa-calendar-alt"></i> {{ event.date|date:"F d, Y" }}</p>
+                        <p class="event-info"><i class="fas fa-map-marker-alt"></i> {{ event.location }}</p>
+                        <p class="event-description">{{ event.description|truncatechars:150 }}</p>
+                        <a href="{% url 'event_detail' event.pk %}" class="event-button">View Details</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+            {% if not upcoming_events %}
+                 {# Only show this if there are no upcoming AND no past events #}
+            {% else %}
+                 <p>No past events available.</p>
+            {% endif %}
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+body {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+}
+
+header, nav, footer {
+    background-color: #1e1e1e !important;
+}
+
+a {
+    color: #80cbc4 !important;
+}
+
+/* Add more overrides as needed */

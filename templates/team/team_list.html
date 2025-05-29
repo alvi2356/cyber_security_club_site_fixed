@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* Add styles for the particle container */
+  #particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0; /* Ensure particles are behind content */
+  }
+
+  .team-container {
+    max-width: 1200px;
+    margin: 120px auto 40px;
+    padding: 0 10px;
+    position: relative; /* Needed to ensure content is above particles */
+    z-index: 1; /* Ensure content is above particles */
+  }
+  /* Ensure other content sections/cards also have a higher z-index if needed */
+  .convenor-section, .committee-section, .member-card {
+      position: relative;
+      z-index: 1;
+  }
+
+  .team-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .team-header h2 {
+    font-size: 3.2rem;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px rgba(0, 149, 255, 0.3);
+  }
+  .team-header p {
+    font-size: 1.4rem;
+    color: #e0e0e0;
+  }
+  .convenor-section {
+    margin: 40px auto 60px auto;
+    padding: 30px 20px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+    max-width: 600px;
+    display: -webkit-flex;
+    align-items: center;
+    gap: 30px;
+  }
+  .convenor-photo-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #00c6ff;
+    flex-shrink: 0;
+    background: #fff;
+  }
+  .convenor-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .convenor-info {
+    flex: 1;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    width: auto;
+  }
+  .convenor-name {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(0, 198, 255, 0.2);
+    font-weight: 700;
+  }
+  .convenor-position {
+    font-size: 1.1rem;
+    color: #00c6ff;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .convenor-bio {
+    font-size: 1rem;
+    color: #e0e0e0;
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+  .committee-section {
+    margin-top: 60px;
+    margin-bottom: 40px;
+  }
+  .section-title {
+    color: #00c6ff;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(0, 198, 255, 0.2);
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+  .member-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  .member-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+  }
+  .member-photo-container {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    position: relative;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  .member-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .member-card:hover .member-photo {
+    transform: scale(1.1);
+  }
+  .member-info {
+    padding: 15px 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .member-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+  .member-position {
+    font-size: 1rem;
+    color: #00c6ff;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .social-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  .member-card:hover .social-icons {
+    opacity: 1;
+  }
+  .social-icon {
+    color: #ffffff;
+    font-size: 1.8rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  .social-icon:hover {
+    color: #00c6ff;
+    transform: scale(1.2);
+  }
+  @media (max-width: 768px) {
+    .team-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .member-photo-container {
+      height: 200px;
+    }
+    .member-name {
+      font-size: 1.3rem;
+    }
+    .member-position {
+      font-size: 0.9rem;
+    }
+    .social-icon {
+      font-size: 1.5rem;
+    }
+  }
+  @media (max-width: 700px) {
+    .convenor-section {
+      flex-direction: column;
+      text-align: center;
+      gap: 18px;
+      padding: 20px 10px;
+    }
+    .convenor-photo-container {
+      width: 150px;
+      height: 150px;
+    }
+  }
+  @media (max-width: 480px) {
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div id="particles-js"></div>
+
+<div class="team-container">
+  <div class="team-header">
+    <h2>Meet Our Team</h2>
+    <p>Dedicated members driving the Cyber Security Club forward.</p>
+  </div>
+
+  <!-- Convenor Section (Hardcoded) -->
+  <div class="convenor-section">
+    <div class="convenor-photo-container">
+      <img class="convenor-photo" src="{% static 'assets/conv.jpg' %}" alt="Convenor Image">
+    </div>
+    <div class="convenor-info">
+      <div class="convenor-name">Dr. Muhammad Towfiqur Rahman</div>
+      <div class="convenor-position">Convenor</div>
+      <div class="convenor-bio">We believe that cyber activities or cyber security abilities are really crucial at this time. As a result, the CSE department at UAP has established a Cyber Security Club to improve cyber security awareness. I believe it will assist students in pursuing a rewarding career in the fields of cryptography, forensics, incident response, and secure network management. Students will be trained to increase their technical knowledge and abilities in order to take on the world's security challenges through this Club.</div>
+    </div>
+  </div>
+
+  <!-- Committee Members Section -->
+  <div class="committee-section">
+    <h3 class="section-title">Committee Members</h3>
+    <div class="team-grid">
+      {% for member in team_members %}
+        <div class="member-card">
+          <div class="member-photo-container">
+            <img class="member-photo" src="{% if member.image %}{{ member.image.url }}{% else %}{% static 'assets/default_team.jpg' %}{% endif %}" alt="{{ member.name }}">
+            <div class="social-icons">
+              {% if member.github_url %}<a href="{{ member.github_url }}" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>{% endif %}
+              {% if member.facebook_url %}<a href="{{ member.facebook_url }}" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>{% endif %}
+              {% if member.linkedin_url %}<a href="{{ member.linkedin_url }}" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>{% endif %}
+            </div>
+          </div>
+          <div class="member-info">
+            <h3 class="member-name">{{ member.name }}</h3>
+            <p class="member-position">{{ member.position }}</p>
+          </div>
+        </div>
+      {% empty %}
+        <p style="text-align:center; font-size:1.2rem; color:#999;">No committee members found yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Particles.js Library -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    particlesJS('particles-js', {
+      particles: {
+        number: {
+          value: 80,
+          density: {
+            enable: true,
+            value_area: 800
+          }
+        },
+        color: {
+          value: '#ffffff'
+        },
+        shape: {
+          type: 'circle'
+        },
+        opacity: {
+          value: 0.6,
+          random: true
+        },
+        size: {
+          value: 3,
+          random: true
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: '#ffffff',
+          opacity: 0.3,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 2,
+          direction: 'none',
+          random: true,
+          straight: false,
+          out_mode: 'out',
+          bounce: false
+        }
+      },
+      interactivity: {
+        detect_on: 'canvas',
+        events: {
+          onhover: {
+            enable: true,
+            mode: 'grab'
+          },
+          onclick: {
+            enable: true,
+            mode: 'push'
+          },
+          resize: true
+        }
+      },
+      retina_detect: true
+    });
+  });
+</script>
+{% endblock %}
