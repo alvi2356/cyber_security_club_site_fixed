@@ -9,16 +9,15 @@
             {% for president in former_presidents %}
             <div class="president-card">
                 <div class="president-image">
-                    {% if president.image %}
-                        <img src="{{ president.image.url }}" alt="{{ president.name }}">
+                    {% if president.photo %}
+                        <img src="{{ president.photo.url }}" alt="{{ president.name }}">
                     {% else %}
                         <img src="{% static 'assets/default_profile.jpg' %}" alt="{{ president.name }}">
                     {% endif %}
                 </div>
                 <div class="president-info">
                     <h3>{{ president.name }}</h3>
-                    <p class="term">Term: {{ president.term_start|date:"Y" }} - {{ president.term_end|date:"Y" }}</p>
-                    <p class="description">{{ president.description }}</p>
+                    <p class="term">Term: {{ president.tenure }}</p>
                 </div>
             </div>
             {% empty %}
@@ -31,17 +30,8 @@
 <style>
 .former-presidents-container {
     padding: 40px 20px;
-    background: linear-gradient(-45deg, #1D2671, #c02cc0, #1D2671, #810077);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
     min-height: 100vh;
     color: #fff;
-}
-
-@keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 .section-title {
@@ -105,11 +95,6 @@
     color: #00c6ff;
     font-size: 1.1rem;
     margin-bottom: 15px;
-}
-
-.description {
-    color: #e0e0e0;
-    line-height: 1.6;
 }
 
 .no-presidents {

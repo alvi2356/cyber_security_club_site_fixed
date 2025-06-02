@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 from .models import Event
 from .forms import EventRegistrationForm
 from .models import Event, EventRegistration
 from django.utils import timezone
+from django.contrib import messages
+from django.http import JsonResponse, HttpResponse
 
 class EventListView(ListView):
     model = Event
@@ -29,32 +31,21 @@ class EventListView(ListView):
         context['past_events'] = past_events
         return context
 
-class EventDetailView(DetailView):
-    model = Event
-    template_name = "events/event_detail.html"
-    context_object_name = "event"
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        event = self.get_object()
-        now = timezone.now()
-        if event.date < now.date() or (event.date == now.date() and event.time and event.time <= now.time()):
-            is_past_event = True
-        else:
-            is_past_event = False
-            
-        ctx["is_past_event"] = is_past_event
-        ctx["registration_form"] = EventRegistrationForm()
-        ctx['gallery_images'] = event.gallery.all()
-        return ctx
-
 @login_required
 def register_for_event(request, pk):
-    event = get_object_or_404(Event, pk=pk)
-    now = timezone.now()
-    if event.date < now.date() or (event.date == now.date() and event.time and event.time <= now.time()):
-        return redirect("event_detail", pk=pk)
+    if request.method == 'POST':
+        event = get_object_or_404(Event, pk=pk)
+        now = timezone.now()
 
-    EventRegistrationForm(request.POST or None)
-    EventRegistration.objects.get_or_create(event=event, user=request.user)
-    return redirect("event_detail", pk=pk)
+        if event.date < now.date() or (event.date == now.date() and event.time and event.time <= now.time()):
+            return JsonResponse({'status': 'error', 'message': 'This event has already occurred.'}, status=400)
+
+        existing_registration = EventRegistration.objects.filter(event=event, user=request.user).exists()
+
+        if existing_registration:
+            return JsonResponse({'status': 'info', 'message': 'You are already registered for this event.'})
+        else:
+            EventRegistration.objects.create(event=event, user=request.user)
+            return JsonResponse({'status': 'success', 'message': 'Thanks for registering! Further details will be mailed very soon.'})
+
+    return HttpResponse("Method not allowed", status=405)

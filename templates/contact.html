@@ -1,6 +1,451 @@
-
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Contact</h2>
-    <p>Email: cyberclub@uap.edu.bd</p>
+<style>
+    /* Hide the footer specifically on this page */
+    footer {
+        display: none !important;
+    }
+
+    body {
+        background-color: #0d1117; /* Restored solid background */
+        color: #c9d1d9;
+        font-family: Arial, sans-serif;
+    }
+
+    .contact-page-container {
+        max-width: 1200px;
+        margin: 120px auto 20px auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 40px;
+        margin-top: 40px;
+    }
+
+    .contact-header h1 {
+        font-size: 2.5rem;
+        color: #00c6ff;
+        margin-bottom: 10px;
+    }
+
+    .contact-header p {
+        font-size: 1.1rem;
+        color: #8b949e;
+    }
+
+    .contact-content-container {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .contact-form-section {
+        flex: 2; /* Takes up more space */
+        min-width: 300px;
+        background-color: #161b22;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative; /* Ensure stacking context */
+        z-index: 3; /* Ensure above particles */
+    }
+
+    .contact-info-section {
+        flex: 1;
+        min-width: 250px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        position: relative;
+        z-index: 3;
+        align-items: center; /* Center items horizontally in the flex column */
+    }
+
+    .contact-form-section h3, .contact-info-block h3, .quick-actions-block h3, .faq-block h3 {
+        color: #58a6ff;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        text-align: center; /* Center the headings */
+    }
+
+    .contact-form .form-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .contact-form .form-group {
+        flex: 1;
+    }
+
+    .contact-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        color: #c9d1d9;
+    }
+
+    .contact-form input[type="text"], 
+    .contact-form input[type="email"], 
+    .contact-form input[type="tel"],
+    .contact-form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #30363d;
+        border-radius: 5px;
+        background-color: #0d1117;
+        color: #c9d1d9;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+
+    .contact-form input::placeholder, .contact-form textarea::placeholder {
+        color: #8b949e;
+    }
+
+    .send-message-button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #00c6ff;
+        color: #0d1117;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .send-message-button:hover {
+        background-color: #58a6ff;
+    }
+
+    .contact-info-block, .quick-actions-block, .faq-block {
+        background-color: #161b22;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative; /* Ensure stacking context */
+        z-index: 3; /* Ensure above particles */
+    }
+
+    .contact-info-block p {
+        margin-bottom: 15px;
+        font-size: 1rem;
+        color: #e0e0e0;
+    }
+
+    .contact-info-block p i {
+        margin-right: 10px;
+        color: #00c6ff;
+    }
+     .contact-info-block p:last-child {
+         margin-bottom: 0;
+     }
+
+    .quick-actions-block {
+        background-color: #161b22;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        max-width: 400px; /* Limit max width */
+        box-sizing: border-box;
+        /* margin: 0 auto; */ /* Removed to avoid conflict with flex centering */
+        text-align: center; /* Center content within the block */
+    }
+
+    .quick-action-button {
+        display: block;
+        width: auto; /* Allow width to be determined by content and padding */
+        padding: 12px;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin-bottom: 15px;
+        margin: 0 auto 15px auto; /* Center the block button and add bottom margin */
+    }
+     .quick-action-button:last-child {
+         margin-bottom: 0;
+         margin: 0 auto 0 auto; /* Center the last button */
+     }
+
+    .quick-action-button.primary {
+        background-color: #238636;
+        color: #fff;
+        border: none;
+    }
+
+    .quick-action-button.primary:hover {
+        background-color: #2ea043;
+    }
+
+    .quick-action-button.secondary {
+        background-color: transparent;
+        color: #00c6ff;
+        border: 2px solid #00c6ff;
+    }
+
+    .quick-action-button.secondary:hover {
+        background-color: #00c6ff;
+        color: #0d1117;
+    }
+
+    .faq-item {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #30363d;
+        padding-bottom: 15px;
+    }
+     .faq-item:last-child {
+         border-bottom: none;
+         padding-bottom: 0;
+     }
+
+    .faq-question {
+        font-weight: bold;
+        color: #e0e0e0;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-bottom: 10px; /* Adjust if adding accordion behavior later */
+    }
+
+    .faq-answer {
+        font-size: 0.9rem;
+        color: #8b949e;
+        line-height: 1.6;
+        /* Initially hidden for accordion effect */
+        /* display: none; */
+    }
+
+    /* Popup Styles */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .popup-content {
+        background-color: #161b22;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .popup-content i {
+        font-size: 48px;
+        color: #00c6ff;
+        margin-bottom: 20px;
+    }
+
+    .popup-content h3 {
+        color: #00c6ff;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .popup-content p {
+        color: #c9d1d9;
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 25px;
+    }
+
+    .close-popup {
+        background-color: #00c6ff;
+        color: #0d1117;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .close-popup:hover {
+        background-color: #58a6ff;
+    }
+
+    @media (max-width: 768px) {
+        .contact-content-container {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+         .contact-form .form-group {
+             margin-bottom: 15px;
+         }
+         .contact-form .form-group:last-child {
+             margin-bottom: 0;
+         }
+         .contact-form-section, .contact-info-section {
+             min-width: unset;
+             width: 100%;
+         }
+
+         .quick-action-button {
+             margin-bottom: 10px;
+         }
+          .quick-action-button:last-child {
+              margin-bottom: 0;
+          }
+
+         .faq-item {
+             margin-bottom: 15px;
+             padding-bottom: 10px;
+         }
+
+         .contact-page-container {
+             margin-top: 70px;
+             padding: 0 15px;
+         }
+
+         .contact-header {
+             margin-bottom: 30px;
+         }
+          .contact-form-section h3, .contact-info-block h3, .quick-actions-block h3, .faq-block h3 {
+             font-size: 1.3rem;
+         }
+    }
+</style>
+
+<div class="contact-page-container">
+    <div class="contact-header">
+        <h1>Get in Touch</h1>
+        <p>Have questions about cybersecurity or want to join our community? We'd love to hear
+            from you.</p>
+    </div>
+
+    <div class="contact-content-container">
+        <div class="contact-form-section">
+            <h3><i class="fas fa-envelope"></i> Send us a Message</h3>
+            <form method="post" class="contact-form" novalidate id="contactForm">
+                {% csrf_token %}
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="id_name">Your Name</label>
+                        <input type="text" name="name" id="id_name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email">Email Address</label>
+                        <input type="email" name="email" id="id_email" placeholder="your.email@example.com" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="id_contact_number">Contact Number (Optional)</label>
+                        <input type="tel" name="contact_number" id="id_contact_number" placeholder="Enter your contact number">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_subject">Subject</label>
+                        <input type="text" name="subject" id="id_subject" placeholder="What's this about?" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_message">Message</label>
+                    <textarea name="message" id="id_message" rows="6" placeholder="Tell us more about your inquiry..." required></textarea>
+                </div>
+                <button type="submit" class="send-message-button"><i class="fas fa-paper-plane"></i> Send Message</button>
+            </form>
+        </div>
+
+        <div class="contact-info-section">
+            <div class="contact-info-block">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> Email: cse.cybersecurity@uap-bd.edu, </p>
+                <p><i class="fas fa-phone-alt"></i> Phone: +880 1700-000000</p>
+                <p><i class="fas fa-map-marker-alt"></i> Location: Department of CSE, 7th Floor, <br>University of Asia Pacific, Dhaka</p>
+               
+            </div>
+
+            <div class="quick-actions-block">
+                <h3>Quick Actions</h3>
+                <a href="{% url 'signup' %}" class="quick-action-button primary">Join Our Club</a>
+                <a href="{% url 'event_list' %}" class="quick-action-button secondary">View Upcoming Events</a>
+            </div>
+
+            <div class="faq-block">
+                <h3>Frequently Asked</h3>
+                <div class="faq-item">
+                    <div class="faq-question">How can I join the club?</div>
+                    <div class="faq-answer">Simply register through our website or visit us during office hours.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Are events free for members?</div>
+                    <div class="faq-answer">Most events are free for club members, with special rates for workshops.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Do I need prior experience?</div>
+                    <div class="faq-answer">No! We welcome all skill levels and provide training for beginners.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Message Popup -->
+<div id="successPopup" class="popup">
+    <div class="popup-content">
+        <i class="fas fa-check-circle"></i>
+        <h3>Thank You!</h3>
+        <p>Your message has been sent successfully. Our Blue Team will reply to you soon.</p>
+        <button class="close-popup">OK</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('contactForm');
+        const popup = document.getElementById('successPopup');
+        const closePopup = document.querySelector('.close-popup');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would typically send the form data to the server
+            // For now, we'll just show the popup
+            popup.style.display = 'flex';
+            
+            // Reset the form
+            form.reset();
+        });
+
+        closePopup.addEventListener('click', function() {
+            popup.style.display = 'none';
+        });
+
+        // Close popup when clicking outside
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                popup.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}

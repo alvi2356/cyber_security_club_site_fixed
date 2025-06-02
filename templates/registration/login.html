@@ -1,10 +1,241 @@
-
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="lock-icon">
+                <i class="fa fa-lock"></i>
+            </div>
+            <h2>Welcome Back</h2>
+            <p>Sign in to your account</p>
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="form-errors">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <div class="alert alert-danger">
+                        {{ field|title }}: {{ error }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" class="login-form" novalidate>
+            {% csrf_token %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Email Address</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                <div class="field-error">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                <div class="password-input-container">
+                    {{ form.password }}
+                    <i class="password-toggle fa fa-eye-slash"></i>
+                </div>
+                {% if form.password.errors %}
+                <div class="field-error">{{ form.password.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-options">
+                <div class="remember-me">
+                    {{ form.remember_me }} <label for="{{ form.remember_me.id_for_label }}">Remember me</label>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </div>
+
+            <button type="submit" class="sign-in-button">Sign In</button>
+        </form>
+
+        <p class="signup-link">Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+
+        <div class="demo-credentials">
+            <h4>Demo Credentials:</h4>
+            <p>Email: demo@example.com</p>
+            <p>Password: password123</p>
+        </div>
+    </div>
+
+    <style>
+        /* Hide the footer specifically on the login page */
+        footer {
+            display: none !important;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #161b22;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 100px;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .lock-icon {
+            font-size: 50px;
+            color: #58a6ff;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .login-header p {
+            font-size: 14px;
+            color: #8b949e;
+            margin-top: 5px;
+        }
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #c9d1d9;
+        }
+        input[type="email"], input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 12px 10px;
+            border: 1px solid #30363d;
+            border-radius: 5px;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            box-sizing: border-box;
+        }
+         input[type="email"]::placeholder, input[type="password"]::placeholder, input[type="text"]::placeholder {
+            color: #8b949e;
+        }
+        .password-input-container {
+            position: relative;
+            width: 100%;
+        }
+        .password-input-container input {
+            padding-right: 35px;
+        }
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #8b949e;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .remember-me input[type="checkbox"] {
+             margin-right: 5px;
+             vertical-align: middle;
+        }
+         .remember-me label {
+             vertical-align: middle;
+             margin-bottom: 0;
+         }
+        .forgot-password a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        .sign-in-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #238636;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .sign-in-button:hover {
+            background-color: #2ea043;
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .signup-link a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .alert-danger {
+            background-color: #da3633;
+            color: #fff;
+        }
+        .alert-success {
+            background-color: #238636;
+            color: #fff;
+        }
+        .field-error {
+            color: #da3633;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .form-errors {
+            margin-bottom: 20px;
+        }
+        .demo-credentials {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #112240;
+            border: 1px dashed #30363d;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .demo-credentials h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #58a6ff;
+            font-size: 13px;
+        }
+        .demo-credentials p {
+            margin: 5px 0;
+        }
+    </style>
 {% endblock %}

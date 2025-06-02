@@ -1,11 +1,17 @@
-
 import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-change-me"
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+# CSRF Settings
+CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
+CSRF_COOKIE_HTTPONLY = True
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000']
+CSRF_USE_SESSIONS = True
+
 JAZZMIN_SETTINGS = {
     "site_title": "Cyber Security Club Admin",
     "site_header": "CSC CSE-UAP Admin",
@@ -14,7 +20,7 @@ JAZZMIN_SETTINGS = {
     # other options...
 }
 INSTALLED_APPS = [
-'jazzmin',
+    'jazzmin',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -23,9 +29,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # local apps
     "accounts",
+    "pages",
     "events",
+    "contact",
     "team",
     "achievements",
+    "django_ckeditor_5",
+    "recruitment",
+    "former_presidents",
 ]
 
 MIDDLEWARE = [
@@ -98,3 +109,17 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
+
+# Recruitment Settings
+RECRUITMENT_ACTIVE = True
+
+# CKEditor 5 Settings
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+                   'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+    }
+}
+
+CKEDITOR_5_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+CKEDITOR_5_UPLOAD_PATH = "uploads/ckeditor/"

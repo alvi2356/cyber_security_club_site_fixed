@@ -4,6 +4,7 @@ class Achievement(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     achieved_on = models.DateField()
+    image = models.ImageField(upload_to='achievements/', blank=True, null=True)
 
     def __str__(self):
         return self.title

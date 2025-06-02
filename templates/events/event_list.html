@@ -299,14 +299,25 @@
                     </div>
                 </div>
                 <div class="event-content-large">
-                    <h4 class="event-title"><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></h4>
+                    <h4 class="event-title">{{ event.title }}</h4>
                     <p class="event-info"><i class="far fa-calendar-alt"></i> {{ event.date|date:"F d, Y" }}</p>
                      {% if event.time %}
                     <p class="event-info"><i class="far fa-clock"></i> {{ event.time|date:"h:i A" }}</p>
                      {% endif %}
                     <p class="event-info"><i class="fas fa-map-marker-alt"></i> {{ event.location }}</p>
                     <p class="event-description">{{ event.description|truncatechars:250 }}</p>
-                    <a href="{% url 'event_detail' event.pk %}" class="event-button">Details / Register</a>
+                    {% if not event.is_past %}
+                        {% if user.is_authenticated %}
+                            <form class="register-form" action="{% url 'event_register' event.pk %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="event-button">Register Now</button>
+                            </form>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="event-button">Login to Register</a>
+                        {% endif %}
+                    {% else %}
+                        <p class="past-event-message" style="text-align:center; font-size:1.1rem; color:#ff6796; margin-top: auto;">This event has already occurred.</p>
+                    {% endif %}
                 </div>
             </div>
             {% endwith %}
@@ -328,11 +339,10 @@
                         </div>
                     </div>
                     <div class="event-content-large">
-                        <h4 class="event-title"><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></h4>
+                        <h4 class="event-title">{{ event.title }}</h4>
                         <p class="event-info"><i class="far fa-calendar-alt"></i> {{ event.date|date:"F d, Y" }}</p>
                         <p class="event-info"><i class="fas fa-map-marker-alt"></i> {{ event.location }}</p>
                         <p class="event-description">{{ event.description|truncatechars:150 }}</p>
-                        <a href="{% url 'event_detail' event.pk %}" class="event-button">View Details</a>
                     </div>
                 </div>
                 {% endfor %}
@@ -349,4 +359,72 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Use event delegation to handle form submissions
+        document.addEventListener('submit', function(e) {
+            // Check if the submitted element or its parent is a registration form
+            const form = e.target.closest('.register-form');
+
+            if (form) {
+                console.log('Registration form submission intercepted.'); // Log to console
+                e.preventDefault(); // Prevent the default form submission
+                console.log('Default form submission prevented.'); // Log after preventDefault
+
+                const formData = new FormData(form);
+                console.log('Initiating fetch request.', form.action, form.method); // Log before fetch
+
+                fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                    headers: {
+                         // Django requires a CSRF token for POST requests
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                    }
+                })
+                .then(response => {
+                    console.log('Fetch response received.', response.status, response.statusText); // Log response status
+                    // Check if the response is JSON
+                    const contentType = response.headers.get("content-type");
+                    if (contentType && contentType.indexOf("application/json") !== -1) {
+                        return response.json().then(data => ({
+                            status: response.status,
+                            body: data
+                        }));
+                    } else {
+                        // If not JSON, handle as text (e.g., simple error message)
+                        return response.text().then(text => ({
+                             status: response.status,
+                             body: text
+                        }));
+                    }
+                })
+                .then(data => {
+                    if (data.status >= 200 && data.status < 300) {
+                        // Successful response (2xx status codes)
+                        // Registration successful - use the message from the JSON response
+                        alert(data.body.message); 
+                        // Optionally, disable the button or change its text
+                        const button = form.querySelector('button');
+                        if (button) {
+                           button.innerText = 'Registered';
+                           button.disabled = true;
+                        }
+                    } else {
+                        // Handle errors or info messages from the backend (non-2xx status codes)
+                        // Display the message from the JSON response or text response
+                        alert('Registration failed: ' + (data.body.message || data.body)); 
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred during registration.');
+                });
+            }
+        });
+    });
+</script>
 {% endblock %}

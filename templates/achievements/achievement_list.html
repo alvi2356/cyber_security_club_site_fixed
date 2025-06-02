@@ -74,8 +74,34 @@
     padding: 30px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: border-color 0.3s ease;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
   }
    .achievement-item:hover { border-color: #00c6ff; }
+
+  .achievement-image {
+    flex: 0 0 300px;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .achievement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .achievement-image:hover img {
+    transform: scale(1.05);
+  }
+
+  .achievement-content {
+    flex: 1;
+  }
 
   .achievement-item h3 {
     font-size: 1.8rem;
@@ -159,19 +185,12 @@
       font-size: 1rem;
     }
     .achievement-item {
-        padding: 20px;
+      flex-direction: column;
     }
-    .achievement-item h3 {
-        font-size: 1.5rem;
+    .achievement-image {
+      flex: 0 0 200px;
+      width: 100%;
     }
-    .achievement-meta {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-     .achievement-meta span {
-         margin-right: 0;
-     }
   }
 </style>
 
@@ -207,22 +226,29 @@
   <div class="achievement-list">
     {% for achievement in achievements %}
       <div class="achievement-item">
-        <h3>{{ achievement.title }}</h3>
-        <div class="achievement-meta">
-          {% if achievement.place %}<span class="tag place">{{ achievement.place }}</span>{% endif %}
-          {% if achievement.type %}<span class="tag type">{{ achievement.type }}</span>{% endif %}
-          {% if achievement.category %}<span class="tag category">{{ achievement.category }}</span>{% endif %}
-          <span><i class="far fa-calendar-alt"></i> {{ achievement.date|date:"F Y" }}</span>
-        </div>
-        <p class="achievement-description">{{ achievement.description }}</p>
-        {% if achievement.participants.exists %}
-          <div class="achievement-participants">
-            <strong>Participants:</strong>
-            {% for participant in achievement.participants.all %}
-              <span>{{ participant.name }}</span>{% if not forloop.last %}, {% endif %}
-            {% endfor %}
+        {% if achievement.image %}
+          <div class="achievement-image">
+            <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}">
           </div>
         {% endif %}
+        <div class="achievement-content">
+          <h3>{{ achievement.title }}</h3>
+          <div class="achievement-meta">
+            {% if achievement.place %}<span class="tag place">{{ achievement.place }}</span>{% endif %}
+            {% if achievement.type %}<span class="tag type">{{ achievement.type }}</span>{% endif %}
+            {% if achievement.category %}<span class="tag category">{{ achievement.category }}</span>{% endif %}
+            <span><i class="far fa-calendar-alt"></i> {{ achievement.achieved_on|date:"F Y" }}</span>
+          </div>
+          <p class="achievement-description">{{ achievement.description }}</p>
+          {% if achievement.participants.exists %}
+            <div class="achievement-participants">
+              <strong>Participants:</strong>
+              {% for participant in achievement.participants.all %}
+                <span>{{ participant.name }}</span>{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
       </div>
     {% empty %}
       <p style="text-align:center; color:#999;">No achievements found yet.</p>
