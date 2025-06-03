@@ -9,15 +9,23 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-default-secret-key-for-developme
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DJANGO_ALLOWED_HOSTS=cybersecurityuap.up.railway.app,localhost,127.0.0.1
 
 # Get the Railway domain
 RAILWAY_DOMAIN = os.environ.get('RAILWAY_DOMAIN', '')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '.railway.app',
+    'cybersecurityuap.up.railway.app',
+    RAILWAY_DOMAIN,
+]
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
     'https://*.railway.app',
+    'https://cybersecurityuap.up.railway.app',
     f'https://{RAILWAY_DOMAIN}',
 ]
 
