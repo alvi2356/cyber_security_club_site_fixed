@@ -18,6 +18,11 @@ pip list
 
 # Create static directory if it doesn't exist
 mkdir -p static
+mkdir -p staticfiles
+
+# Remove old static files
+echo "Cleaning old static files..."
+rm -rf staticfiles/*
 
 # Collect static files
 echo "Collecting static files..."
@@ -33,4 +38,8 @@ env | grep -v "SECRET" | grep -v "PASSWORD" | grep -v "KEY"
 
 # Print database configuration
 echo "Database configuration:"
-python -c "from django.conf import settings; print('Database:', settings.DATABASES['default']['ENGINE'])" 
+python -c "from django.conf import settings; print('Database:', settings.DATABASES['default']['ENGINE'])"
+
+# Print static files configuration
+echo "Static files configuration:"
+python -c "from django.conf import settings; print('STATIC_ROOT:', settings.STATIC_ROOT); print('STATIC_URL:', settings.STATIC_URL); print('STATICFILES_DIRS:', settings.STATICFILES_DIRS)" 
