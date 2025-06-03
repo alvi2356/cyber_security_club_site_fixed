@@ -18,19 +18,10 @@ pip list
 
 # Create static directory if it doesn't exist
 mkdir -p static
-mkdir -p staticfiles
-
-# Remove old static files
-echo "Cleaning old static files..."
-rm -rf staticfiles/*
 
 # Collect static files
 echo "Collecting static files..."
 python manage.py collectstatic --no-input --clear
-
-# Verify static files
-echo "Verifying static files..."
-python verify_static.py
 
 # Run migrations
 echo "Running migrations..."

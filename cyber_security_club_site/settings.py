@@ -13,8 +13,46 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 # Get the Railway domain
 RAILWAY_DOMAIN = os.environ.get('RAILWAY_DOMAIN', 'cybersecurityuap.up.railway.app')
 
-# Parse ALLOWED_HOSTS from environment variable
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'cybersecurityuap.up.railway.app,localhost,127.0.0.1').split(',')
+# Parse ALLOWED_HOSTS from environment variable or use defaults
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', f'{RAILWAY_DOMAIN},localhost,127.0.0.1').split(',')
+
+# Static files configuration
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Media files configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Add whitenoise for static files
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Make sure this is right after SecurityMiddleware
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# Configure WhiteNoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# WhiteNoise configuration
+# Ensure WhiteNoise serves the static files from STATIC_ROOT
+WHITENOISE_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Security settings
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
@@ -31,19 +69,11 @@ CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_NAME = 'csrftoken'
-CSRF_COOKIE_DOMAIN = '.railway.app'
 
 # Session settings
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_DOMAIN = '.railway.app'
-
-# Security settings
-SECURE_SSL_REDIRECT = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = 'DENY'
 
 # Logging configuration
 LOGGING = {
@@ -64,37 +94,6 @@ LOGGING = {
         'propagate': False,
     },
 }
-
-# Media files configuration
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Static files configuration
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-# Add whitenoise for static files
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-# Configure WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# WhiteNoise configuration
-WHITENOISE_USE_FINDERS = True
-WHITENOISE_MANIFEST_STRICT = False
-WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Database configuration
 DATABASES = {
