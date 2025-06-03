@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Application Submitted{% endblock %}
+
+{% block content %}
+<div class="recruitment-page-container">
+    <div class="recruitment-header">
+        <h1>Application Submitted Successfully!</h1>
+        <p>Thank you for your interest in joining the Blue Team. Your application has been received.</p>
+        <p>We will review your application and contact you regarding the next steps.</p>
+    </div>
+     <style>
+        /* Hide the footer specifically on this page */
+        footer {
+            display: none !important;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: Arial, sans-serif;
+        }
+
+        .recruitment-page-container {
+            max-width: 800px;
+            margin: 80px auto 20px auto; /* Adjust top margin to account for fixed header */
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .recruitment-header h1 {
+            font-size: 2.5rem;
+            color: #28a745; /* Use a color indicating success */
+            margin-bottom: 10px;
+        }
+
+        .recruitment-header p {
+            font-size: 1.1rem;
+            color: #8b949e;
+            margin-bottom: 15px;
+        }
+         .recruitment-header p:last-child {
+             margin-bottom: 0;
+         }
+
+         @media (max-width: 768px) {
+            .recruitment-page-container {
+                margin-top: 70px;
+                padding: 0 15px;
+            }
+            .recruitment-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+
+    </style>
+</div>
+{% endblock %} 

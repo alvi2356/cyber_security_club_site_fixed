@@ -1,0 +1,356 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if active_drive %}
+        Join Us - {{ active_drive.name }}
+    {% else %}
+        Join Us - Recruitment
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="recruitment-page-container">
+    <div class="recruitment-header">
+        {% if active_drive %}
+            <h1>Join the Blue Team for {{ active_drive.name }}</h1>
+            <p>Are you passionate about cybersecurity? Apply to become a member of our club and contribute to our initiatives for the {{ active_drive.name }} recruitment drive.</p>
+        {% else %}
+             <h1>Join the Blue Team</h1>
+             <p>Are you passionate about cybersecurity? Apply to become a member of our club and contribute to our initiatives.</p>
+        {% endif %}
+    </div>
+
+    <div class="recruitment-content-container">
+        <div class="recruitment-form-section">
+            <h3><i class="fas fa-user-plus"></i> Application Form</h3>
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Please correct the errors below:</strong>
+                    <ul>
+                        {% for field in form %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <form method="post" class="recruitment-form" novalidate>
+                {% csrf_token %}
+
+                {# Render form fields manually for better control over layout #}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.student_id.id_for_label }}">{{ form.student_id.label }}</label>
+                        {{ form.student_id }}
+                    </div>
+                </div>
+
+                 <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.semester.id_for_label }}">{{ form.semester.label }}</label>
+                        {{ form.semester }}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.contact.id_for_label }}">{{ form.contact.label }}</label>
+                        {{ form.contact }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.position.id_for_label }}">{{ form.position.label }}</label>
+                        {{ form.position }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.anchoring_skills.id_for_label }}">{{ form.anchoring_skills.label }} (Optional)</label>
+                    {{ form.anchoring_skills }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.why_join.id_for_label }}">{{ form.why_join.label }}</label>
+                    {{ form.why_join }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.graphics_design_link.id_for_label }}">{{ form.graphics_design_link.label }} (Optional)</label>
+                    {{ form.graphics_design_link }}
+                </div>
+
+                <button type="submit" class="submit-application-button"><i class="fas fa-paper-plane"></i> Submit Application</button>
+            </form>
+        </div>
+
+        <div class="recruitment-info-section">
+             <div class="info-block">
+                <h3>Available Positions</h3>
+                <ul>
+                    <li>Media and Publication</li>
+                    <li>Executive</li>
+                    <li>Representative</li>
+                    <li>Graphics Designer</li>
+                </ul>
+             </div>
+
+             <div class="info-block">
+                 <h3>Requirements</h3>
+                 <p>To be eligible to apply, you must be a currently enrolled student.</p>
+                 <p>Specific requirements may vary by position.</p>
+                 {% if active_drive.start_date or active_drive.end_date %}
+                     <p>
+                         {% if active_drive.start_date %}Application Start Date: {{ active_drive.start_date|date:"F d, Y" }}{% endif %}
+                         {% if active_drive.end_date %}<br>Application End Date: {{ active_drive.end_date|date:"F d, Y" }}{% endif %}
+                     </p>
+                 {% endif %}
+
+             </div>
+
+             <div class="info-block">
+                 <h3>Selection Process</h3>
+                 <p>Applications will be reviewed, and selected candidates will be contacted for an interview.</p>
+                 <p>Please ensure your contact information is accurate.</p>
+             </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* Hide the footer specifically on this page */
+    footer {
+        display: none !important;
+    }
+
+    body {
+        background-color: #0d1117;
+        color: #c9d1d9;
+        font-family: Arial, sans-serif;
+    }
+
+    .recruitment-page-container {
+        max-width: 1200px;
+        margin: 120px auto 20px auto; /* Increased top margin */
+        padding: 0 20px;
+    }
+
+    .recruitment-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .recruitment-header h1 {
+        font-size: 2.5rem;
+        color: #00c6ff;
+        margin-bottom: 10px;
+    }
+
+    .recruitment-header p {
+        font-size: 1.1rem;
+        color: #8b949e;
+    }
+
+    .recruitment-content-container {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .recruitment-form-section {
+        flex: 2; /* Takes up more space */
+        min-width: 300px;
+        background-color: #161b22;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .recruitment-info-section {
+        flex: 1; /* Takes up less space */
+        min-width: 250px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .recruitment-form-section h3, .info-block h3 {
+        color: #58a6ff;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+     .info-block {
+         background-color: #161b22;
+         padding: 30px;
+         border-radius: 10px;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+     }
+
+     .info-block ul {
+         list-style: none;
+         padding: 0;
+     }
+
+     .info-block ul li {
+         margin-bottom: 10px;
+         font-size: 1rem;
+         color: #e0e0e0;
+     }
+
+     .info-block p {
+         margin-bottom: 15px;
+         font-size: 1rem;
+         color: #e0e0e0;
+     }
+      .info-block p:last-child {
+          margin-bottom: 0;
+      }
+
+
+    .recruitment-form .form-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .recruitment-form .form-group {
+        flex: 1;
+    }
+
+    .recruitment-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        color: #c9d1d9;
+    }
+
+    .recruitment-form input[type="text"], 
+    .recruitment-form input[type="email"], 
+    .recruitment-form input[type="tel"],
+    .recruitment-form input[type="url"],
+    .recruitment-form select,
+    .recruitment-form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #30363d;
+        border-radius: 5px;
+        background-color: #0d1117;
+        color: #c9d1d9;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+
+    .recruitment-form input::placeholder, .recruitment-form textarea::placeholder {
+        color: #8b949e;
+    }
+
+     .recruitment-form .form-control {
+         width: 100%; /* Ensure form-control class applied by widgets takes full width */
+         padding: 10px;
+         border: 1px solid #30363d;
+         border-radius: 5px;
+         background-color: #0d1117;
+         color: #c9d1d9;
+         box-sizing: border-box;
+         font-size: 1rem;
+     }
+
+
+    .submit-application-button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #00c6ff;
+        color: #0d1117;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .submit-application-button:hover {
+        background-color: #58a6ff;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-danger {
+        color: #842029;
+        background-color: #f8d7da;
+        border-color: #f5c2c7;
+    }
+
+    .alert ul {
+        margin-bottom: 0;
+        padding-left: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .recruitment-content-container {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .recruitment-form .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+         .recruitment-form .form-group {
+             margin-bottom: 15px;
+         }
+         .recruitment-form .form-group:last-child {
+             margin-bottom: 0;
+         }
+         .recruitment-form-section, .recruitment-info-section {
+             min-width: unset;
+             width: 100%;
+         }
+
+         .info-block {
+             margin-bottom: 20px; /* Add space between info blocks on small screens */
+         }
+          .info-block:last-child {
+              margin-bottom: 0;
+          }
+
+         .recruitment-page-container {
+             margin-top: 70px;
+             padding: 0 15px;
+         }
+
+         .recruitment-header {
+             margin-bottom: 30px;
+         }
+          .recruitment-form-section h3, .info-block h3 {
+             font-size: 1.3rem;
+         }
+    }
+
+</style>
+{% endblock %} 

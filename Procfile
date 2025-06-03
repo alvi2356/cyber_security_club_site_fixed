@@ -1,0 +1,1 @@
+web: gunicorn cyber_security_club_site.wsgi 

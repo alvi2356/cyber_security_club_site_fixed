@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Recruitment Closed{% endblock %}
+
+{% block content %}
+<div class="recruitment-page-container">
+    <div class="recruitment-header">
+        <h1>Recruitment is Currently Closed</h1>
+        <p>{{ message }}</p>
+        <p>Please check back later for future recruitment announcements.</p>
+    </div>
+    <style>
+        /* Hide the footer specifically on this page */
+        footer {
+            display: none !important;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: Arial, sans-serif;
+            /* Add flexbox properties for centering */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally if container is smaller */
+            min-height: 100vh; /* Ensure body takes at least full viewport height */
+            margin: 0; /* Remove default body margin */
+            padding: 0; /* Remove default body padding */
+        }
+
+        .recruitment-page-container {
+            max-width: 800px;
+            /* Adjust margin - remove top margin as flexbox handles vertical centering */
+            margin: 0 auto; /* Remove top/bottom margin to allow flexbox centering */
+            padding: 0 20px;
+            text-align: center;
+             width: 100%; /* Allow container to take full width up to max-width */
+             box-sizing: border-box; /* Include padding in the element's total width and height */
+        }
+
+        .recruitment-header {
+            /* Add a top margin to create space */
+            margin-top: 50px;
+            margin-bottom: 15px; /* Keep existing bottom margin or adjust as needed */
+            text-align: center;
+        }
+
+        .recruitment-header h1 {
+            font-size: 2.5rem;
+            color: #e74c3c; /* Use a color indicating closed state */
+            margin-bottom: 10px;
+        }
+
+        .recruitment-header p {
+            font-size: 1.1rem;
+            color: #8b949e;
+            margin-bottom: 15px;
+        }
+
+         .recruitment-header p:last-child {
+             margin-bottom: 0;
+         }
+
+        @media (max-width: 768px) {
+            .recruitment-page-container {
+                margin-top: 70px;
+                padding: 0 15px;
+            }
+            .recruitment-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+    </style>
+</div>
+{% endblock %} 
