@@ -10,7 +10,21 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-default-secret-key-for-developme
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*']  # For Railway deployment
+# Get the Railway domain
+RAILWAY_DOMAIN = os.environ.get('RAILWAY_DOMAIN', '')
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '.railway.app',  # Allow all Railway subdomains
+    RAILWAY_DOMAIN,  # Add the Railway domain if set
+]
+
+# CSRF settings
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.railway.app',
+    f'https://{RAILWAY_DOMAIN}',
+]
 
 # Media files configuration
 MEDIA_URL = '/media/'
@@ -27,7 +41,12 @@ STATICFILES_DIRS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    # ... rest of your middleware ...
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 # Configure WhiteNoise
