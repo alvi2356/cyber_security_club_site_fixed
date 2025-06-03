@@ -13,7 +13,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 # Get the Railway domain
 RAILWAY_DOMAIN = os.environ.get('RAILWAY_DOMAIN', '')
 
-ALLOWED_HOSTS = ['cybersecurityuap.up.railway.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
