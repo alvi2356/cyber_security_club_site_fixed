@@ -4,7 +4,12 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-change-me"
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'cybersecurityuap.up.railway.app',
+]
+
 
 # CSRF Settings
 CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
