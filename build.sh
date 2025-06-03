@@ -28,6 +28,10 @@ rm -rf staticfiles/*
 echo "Collecting static files..."
 python manage.py collectstatic --no-input --clear
 
+# Verify static files
+echo "Verifying static files..."
+python verify_static.py
+
 # Run migrations
 echo "Running migrations..."
 python manage.py migrate --no-input
@@ -42,4 +46,8 @@ python -c "from django.conf import settings; print('Database:', settings.DATABAS
 
 # Print static files configuration
 echo "Static files configuration:"
-python -c "from django.conf import settings; print('STATIC_ROOT:', settings.STATIC_ROOT); print('STATIC_URL:', settings.STATIC_URL); print('STATICFILES_DIRS:', settings.STATICFILES_DIRS)" 
+python -c "from django.conf import settings; print('STATIC_ROOT:', settings.STATIC_ROOT); print('STATIC_URL:', settings.STATIC_URL); print('STATICFILES_DIRS:', settings.STATICFILES_DIRS)"
+
+# List collected static files
+echo "Listing collected static files:"
+ls -R staticfiles/ 
