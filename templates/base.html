@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>Cyber Security Club CSE-UAP</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" href="{% static 'assets/logo1.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'assets/logo1.png' %}">
     <style>
         body {
             margin: 0;
@@ -430,10 +431,11 @@
     </style>
 </head>
 <body>
+    {% csrf_token %}
     <header>
         <div class="nav-container">
             <a href="{% url 'home' %}" class="logo">
-                <img src="{% static 'assets/logo1.png' %}" alt="Cyber Security Club Logo">
+                <img src="{% static 'assets/logo1.png' %}" alt="Cyber Security Club Logo" loading="eager">
                 <h1>Cyber Security Club</h1>
             </a>
             <button class="mobile-menu-button">
@@ -472,7 +474,7 @@
             <div class="footer-container">
                 <div class="footer-section footer-logo">
                      <a href="{% url 'home' %}" class="logo">
-                        <img src="{% static 'assets/logo1.png' %}" alt="Cyber Security Club Logo">
+                        <img src="{% static 'assets/logo1.png' %}" alt="Cyber Security Club Logo" loading="lazy">
                         <h1>Cyber Security Club CSE-UAP</h1>
                     </a>
                     <p>Empowering the next generation of cybersecurity professionals through knowledge sharing, skill development, and community engagement.</p>

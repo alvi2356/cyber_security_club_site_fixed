@@ -1,7 +1,229 @@
-
 body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
 header { background: #222; color: #fff; padding: 1rem; }
 nav a { color: #fff; margin-right: 1rem; text-decoration: none; }
 .team-grid { display: flex; flex-wrap: wrap; gap: 1rem; }
 .member-card { border: 1px solid #ddd; padding: 1rem; width: 200px; text-align: center; }
 img { max-width: 100%; height: auto; border-radius: 4px; }
+
+/* Add styles for the new Events section */
+.events-section {
+    padding: 60px 20px;
+    background-color: #0f1f3a; /* Dark background color similar to screenshot */
+    color: #fff;
+}
+
+.event-category-title {
+    font-size: 2rem;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #00c6ff; /* Underline similar to screenshot */
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* Styles for the single large upcoming event card */
+.upcoming-event-card-large {
+    display: flex;
+    flex-direction: column; /* Stack image and content on small screens */
+    background-color: #1a365d; /* Card background color */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px; /* Space below the large card */
+}
+
+.event-image-container-large {
+    width: 100%;
+    height: 400px; /* Made images larger */
+    overflow: hidden;
+    position: relative;
+}
+
+.event-image-container-large::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(26, 54, 93, 0.5) 0%, rgba(26, 54, 93, 0) 50%); /* Subtle dark blue gradient overlay */
+    z-index: 1; /* Ensure overlay is above the image */
+}
+
+.event-image-container-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image covers the container */
+}
+
+.event-content-large {
+    padding: 30px; /* Increased padding */
+    flex-grow: 1;
+}
+
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Show 3 cards per line */
+    gap: 30px;
+}
+
+.event-card {
+    background-color: #1a365d; /* Card background color */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.event-image-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Made images larger */
+    overflow: hidden;
+}
+
+.event-image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(26, 54, 93, 0.5) 0%, rgba(26, 54, 93, 0) 50%); /* Subtle dark blue gradient overlay */
+    z-index: 1; /* Ensure overlay is above the image */
+}
+
+.event-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure images cover the container */
+}
+
+.event-card.past .event-image-container img {
+    filter: grayscale(100%); /* Grayscale for past event images */
+}
+
+.event-tags {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    z-index: 1;
+}
+
+.event-tag {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Example specific tag colors - adjust as needed */
+.event-tag.workshop { background-color: #007bff; }
+.event-tag.beginner-friendly { background-color: #28a745; }
+.event-tag.panel { background-color: #ffc107; color: #333; }
+.event-tag.career { background-color: #17a2b8; }
+.event-tag.competition { background-color: #dc3545; }
+.event-tag.advanced { background-color: #6610f2; }
+.event-tag.seminar { background-color: #fd7e14; }
+.event-tag.awareness { background-color: #6f42c1; }
+
+.event-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-title {
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #fff; /* Set title color to white */
+    transition: all 0.3s ease; /* Add transition for smooth hover effect */
+}
+
+.event-title a {
+    color: inherit; /* Ensure link color is inherited from the title */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.event-title:hover {
+    background: linear-gradient(45deg, #00c6ff, #a060f0, #00c6ff); /* Gradient for hover effect, repeated for animation */
+    background-size: 200% 200%; /* Increase background size for animation */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-text-animation 3s ease infinite; /* Apply animation */
+}
+
+@keyframes gradient-text-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.event-info {
+    font-size: 0.9rem;
+    color: #e0e0e0;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.event-info i {
+    margin-right: 8px;
+    color: #0095ff; /* Icon color */
+}
+
+.event-description {
+    font-size: 1rem;
+    color: #cccccc;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.event-button {
+    display: inline-block;
+    background: linear-gradient(45deg, #0095ff, #00c6ff); /* Button gradient */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.event-button:hover {
+     background: linear-gradient(45deg, #00c6ff, #0095ff); /* Reverse gradient on hover */
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .event-grid {
+        grid-template-columns: 1fr; /* Stack cards on smaller screens */
+    }
+}
+
+.upcoming-events {
+    margin: 0 auto; /* Center the upcoming events container */
+    max-width: 100%; /* Ensure it doesn't exceed its parent width */
+}
+
+.large-upcoming-card {
+    max-width: 700px; /* Set a max width for the single card */
+    margin: 20px auto; /* Center the card and add vertical margin */
+    /* Existing styles for event-card and large-upcoming-card will also apply */
+}

@@ -9,25 +9,37 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-default-secret-key-for-developme
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-DJANGO_ALLOWED_HOSTS=cybersecurityuap.up.railway.app,localhost,127.0.0.1
 
 # Get the Railway domain
 RAILWAY_DOMAIN = os.environ.get('RAILWAY_DOMAIN', '')
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '.railway.app',
-    'cybersecurityuap.up.railway.app',
-    RAILWAY_DOMAIN,
-]
+# Parse ALLOWED_HOSTS from environment variable
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'cybersecurityuap.up.railway.app,localhost,127.0.0.1').split(',')
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.railway.app',
     'https://cybersecurityuap.up.railway.app',
-    f'https://{RAILWAY_DOMAIN}',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
 ]
+
+# CSRF Cookie settings
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_NAME = 'csrftoken'
+
+# Session settings
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+
+# Security settings
+SECURE_SSL_REDIRECT = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
 
 # Logging configuration
 LOGGING = {
@@ -90,11 +102,3 @@ DATABASES = {
         }
     }
 }
-
-# Security settings
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = 'DENY'
