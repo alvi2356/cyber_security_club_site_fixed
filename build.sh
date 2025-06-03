@@ -2,11 +2,35 @@
 # exit on error
 set -o errexit
 
+# Print Python version
+python --version
+
+# Print pip version
+pip --version
+
 # Install Python dependencies
+echo "Installing dependencies..."
 pip install -r requirements.txt
 
+# Print installed packages
+echo "Installed packages:"
+pip list
+
+# Create static directory if it doesn't exist
+mkdir -p static
+
 # Collect static files
-python manage.py collectstatic --no-input
+echo "Collecting static files..."
+python manage.py collectstatic --no-input --clear
 
 # Run migrations
-python manage.py migrate 
+echo "Running migrations..."
+python manage.py migrate --no-input
+
+# Print environment variables (excluding sensitive ones)
+echo "Environment variables:"
+env | grep -v "SECRET" | grep -v "PASSWORD" | grep -v "KEY"
+
+# Print database configuration
+echo "Database configuration:"
+python -c "from django.conf import settings; print('Database:', settings.DATABASES['default']['ENGINE'])" 
